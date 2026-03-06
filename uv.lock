@@ -130,7 +130,7 @@ wheels = [
 
 [[package]]
 name = "coach"
-version = "0.1.9"
+version = "0.1.10"
 source = { editable = "coach" }
 dependencies = [
     { name = "data-leak" },
@@ -460,7 +460,7 @@ wheels = [
 
 [[package]]
 name = "launchpad"
-version = "0.1.1"
+version = "0.1.2"
 source = { editable = "launchpad" }
 dependencies = [
     { name = "httpx" },
