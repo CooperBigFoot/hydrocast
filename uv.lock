@@ -130,7 +130,7 @@ wheels = [
 
 [[package]]
 name = "coach"
-version = "0.1.10"
+version = "0.1.11"
 source = { editable = "coach" }
 dependencies = [
     { name = "data-leak" },
@@ -261,7 +261,7 @@ wheels = [
 
 [[package]]
 name = "data-leak"
-version = "0.1.9"
+version = "0.1.11"
 source = { editable = "data-leak" }
 dependencies = [
     { name = "polars" },
