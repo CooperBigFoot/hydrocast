@@ -1,0 +1,9 @@
+[submodule "time-flies"]
+	path = time-flies
+	url = https://github.com/CooperBigFoot/time-flies.git
+[submodule "data-leak"]
+	path = data-leak
+	url = https://github.com/CooperBigFoot/data-leak.git
+[submodule "coach"]
+	path = coach
+	url = https://github.com/CooperBigFoot/coach.git
