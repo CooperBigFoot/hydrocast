@@ -17,6 +17,7 @@ from pydantic import ValidationError
 class TestLaunchpadConfigDefaults:
     def test_defaults_applied(self, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.setenv("RUNPOD_API_KEY", "test-key")
+        monkeypatch.delenv("HF_TOKEN", raising=False)
         cfg = LaunchpadConfig.load(config_path=Path("/nonexistent/path.yaml"))
 
         assert cfg.api_key.get_secret_value() == "test-key"
@@ -44,7 +45,9 @@ class TestLaunchpadConfigFromEnv:
 
 
 class TestLaunchpadConfigFromYaml:
-    def test_loads_from_yaml(self, tmp_path: Path) -> None:
+    def test_loads_from_yaml(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.delenv("RUNPOD_API_KEY", raising=False)
+        monkeypatch.delenv("HF_TOKEN", raising=False)
         config_file = tmp_path / "config.yaml"
         config_file.write_text(yaml.dump({"api_key": "yaml-key", "default_image": "custom:latest"}))
         cfg = LaunchpadConfig.load(config_path=config_file)
@@ -60,7 +63,9 @@ class TestLaunchpadConfigFromYaml:
 
 
 class TestLaunchpadConfigValidation:
-    def test_missing_api_key_raises(self) -> None:
+    def test_missing_api_key_raises(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.delenv("RUNPOD_API_KEY", raising=False)
+        monkeypatch.delenv("HF_TOKEN", raising=False)
         with pytest.raises(Exception, match="api_key"):
             LaunchpadConfig.load(config_path=Path("/nonexistent/path.yaml"))
 

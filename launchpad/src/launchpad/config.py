@@ -30,10 +30,6 @@ class LaunchpadConfig(BaseModel):
     def load(cls, config_path: Path | None = None) -> LaunchpadConfig:
         import os
 
-        from dotenv import load_dotenv
-
-        load_dotenv()
-
         raw: dict[str, Any] = {}
         path = config_path or Path("~/.launchpad/config.yaml").expanduser()
         if path.exists():

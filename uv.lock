@@ -460,7 +460,7 @@ wheels = [
 
 [[package]]
 name = "launchpad"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "launchpad" }
 dependencies = [
     { name = "httpx" },

@@ -49,11 +49,11 @@ class RunPodProvider:
         return response.json()
 
     def _graphql_query(self, query: str, variables: dict | None = None) -> dict[str, Any]:
-        url = f"{self._graphql_url}?api_key={self._api_key}"
+        headers = {"Authorization": f"Bearer {self._api_key}"}
         payload: dict[str, Any] = {"query": query}
         if variables:
             payload["variables"] = variables
-        response = self._client.post(url, json=payload)
+        response = self._client.post(self._graphql_url, headers=headers, json=payload)
         if response.status_code >= 400:
             raise RunPodApiError(response.status_code, response.text)
         data = response.json()
@@ -123,7 +123,7 @@ class RunPodProvider:
 
     def resume_pod(self, pod_id: PodId) -> PodInfo:
         log.info("Resuming pod %s", pod_id)
-        data = self._rest_request("POST", f"/pods/{pod_id}/resume")
+        data = self._rest_request("POST", f"/pods/{pod_id}/start")
         return self._parse_pod(data)
 
     def terminate_pod(self, pod_id: PodId) -> None:
@@ -151,16 +151,16 @@ class RunPodProvider:
             "size": size_gb,
             "dataCenterId": str(data_center_id),
         }
-        data = self._rest_request("POST", "/network_storage", json=body)
+        data = self._rest_request("POST", "/networkvolumes", json=body)
         return self._parse_volume(data)
 
     def list_volumes(self) -> list[VolumeInfo]:
-        data = self._rest_request("GET", "/network_storage")
+        data = self._rest_request("GET", "/networkvolumes")
         return [self._parse_volume(v) for v in data]
 
     def get_volume(self, volume_id: VolumeId) -> VolumeInfo:
         try:
-            data = self._rest_request("GET", f"/network_storage/{volume_id}")
+            data = self._rest_request("GET", f"/networkvolumes/{volume_id}")
         except RunPodApiError as e:
             if e.status_code == 404:
                 raise VolumeNotFoundError(str(volume_id)) from e
@@ -169,7 +169,7 @@ class RunPodProvider:
 
     def delete_volume(self, volume_id: VolumeId) -> None:
         log.info("Deleting volume %s", volume_id)
-        self._rest_request("DELETE", f"/network_storage/{volume_id}")
+        self._rest_request("DELETE", f"/networkvolumes/{volume_id}")
 
     def list_gpu_types(self) -> list[GpuType]:
         query = """

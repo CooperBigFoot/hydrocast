@@ -17,8 +17,22 @@ volume_app = typer.Typer(name="volume", no_args_is_help=True, help="Manage RunPo
 app.add_typer(volume_app, name="volume")
 
 
+def _find_dotenv() -> None:
+    from pathlib import Path
+
+    from dotenv import load_dotenv
+
+    cwd = Path.cwd()
+    for directory in [cwd, *cwd.parents]:
+        env_file = directory / ".env"
+        if env_file.is_file():
+            load_dotenv(env_file)
+            return
+
+
 def _load_config() -> LaunchpadConfig:
     try:
+        _find_dotenv()
         return LaunchpadConfig.load()
     except LaunchpadError as e:
         print_error(str(e))
