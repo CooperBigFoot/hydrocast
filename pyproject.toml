@@ -1,5 +1,5 @@
 [tool.uv.workspace]
-members = ["time-flies", "data-leak", "coach"]
+members = ["time-flies", "data-leak", "coach", "launchpad"]
 
 [dependency-groups]
 dev = [
@@ -22,7 +22,7 @@ quote-style = "double"
 indent-style = "space"
 
 [tool.pytest.ini_options]
-testpaths = ["time-flies/tests", "data-leak/tests", "coach/tests"]
+testpaths = ["time-flies/tests", "data-leak/tests", "coach/tests", "launchpad/tests"]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]

@@ -20,18 +20,23 @@ def pytest_configure(config):  # noqa: ARG001
         sys.path.remove(root)
 
     # Ensure each submodule's src/ directory is on sys.path
-    for pkg in ("coach", "data-leak", "time-flies"):
+    for pkg in ("coach", "data-leak", "time-flies", "launchpad"):
         src = str(Path(__file__).parent / pkg / "src")
         if src not in sys.path:
             sys.path.insert(0, src)
 
-    # If 'coach' was already (mis-)imported as a namespace package from the
-    # bare directory, purge it and all submodules so the real package wins.
-    stale = [k for k in sys.modules if k == "coach" or k.startswith("coach.")]
-    for k in stale:
-        del sys.modules[k]
+    # If packages were already (mis-)imported as namespace packages from
+    # bare directories, purge them and all submodules so the real packages win.
+    for pkg_name in ("coach", "launchpad"):
+        stale = [k for k in sys.modules if k == pkg_name or k.startswith(f"{pkg_name}.")]
+        for k in stale:
+            del sys.modules[k]
 
-    # Force-import coach from the now-correct path so it's cached
+    # Force-import packages from the now-correct paths so they're cached
     import coach  # noqa: F811
 
     importlib.reload(coach)
+
+    import launchpad  # noqa: F811
+
+    importlib.reload(launchpad)
