@@ -18,8 +18,8 @@ class LaunchpadConfig(BaseModel):
 
     api_key: SecretStr
     hf_token: SecretStr | None = None
-    default_gpu: GpuTypeId = Field(default=GpuTypeId("NVIDIA A40"))
-    default_cloud_type: CloudType = Field(default=CloudType.COMMUNITY)
+    default_gpu: GpuTypeId = Field(default=GpuTypeId("NVIDIA GeForce RTX 5090"))
+    default_cloud_type: CloudType = Field(default=CloudType.SECURE)
     default_data_center: DataCenterId = Field(default=DataCenterId("US-TX-3"))
     default_image: str = Field(default=DEFAULT_IMAGE)
     ssh_key_path: Path = Field(default=Path("~/.ssh/id_ed25519"))

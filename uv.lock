@@ -130,7 +130,7 @@ wheels = [
 
 [[package]]
 name = "coach"
-version = "0.1.14"
+version = "0.1.22"
 source = { editable = "coach" }
 dependencies = [
     { name = "data-leak" },
@@ -261,7 +261,7 @@ wheels = [
 
 [[package]]
 name = "data-leak"
-version = "0.1.11"
+version = "0.1.21"
 source = { editable = "data-leak" }
 dependencies = [
     { name = "polars" },
@@ -1158,7 +1158,7 @@ wheels = [
 
 [[package]]
 name = "time-flies"
-version = "0.1.10"
+version = "0.1.14"
 source = { editable = "time-flies" }
 dependencies = [
     { name = "pydantic" },

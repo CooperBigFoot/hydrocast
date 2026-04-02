@@ -46,6 +46,8 @@ class RunPodProvider:
         response = self._client.request(method, url, headers=headers, json=json)
         if response.status_code >= 400:
             raise RunPodApiError(response.status_code, response.text)
+        if not response.content:
+            return {}
         return response.json()
 
     def _graphql_query(self, query: str, variables: dict | None = None) -> dict[str, Any]:
@@ -99,12 +101,12 @@ class RunPodProvider:
         cloud_type = "COMMUNITY" if self._config.default_cloud_type == CloudType.COMMUNITY else "SECURE"
         body: dict[str, Any] = {
             "name": name,
-            "gpuTypeId": str(gpu_type_id),
+            "gpuTypeIds": [str(gpu_type_id)],
             "imageName": image,
             "gpuCount": gpu_count,
             "cloudType": cloud_type,
             "supportPublicIp": True,
-            "ports": "22/tcp,8888/http",
+            "ports": ["22/tcp", "8888/http"],
         }
         if volume_id:
             body["networkVolumeId"] = str(volume_id)
