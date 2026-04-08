@@ -22,8 +22,8 @@ class TestLaunchpadConfigDefaults:
 
         assert cfg.api_key.get_secret_value() == "test-key"
         assert cfg.hf_token is None
-        assert cfg.default_gpu == GpuTypeId("NVIDIA A40")
-        assert cfg.default_cloud_type == CloudType.COMMUNITY
+        assert cfg.default_gpu == GpuTypeId("NVIDIA GeForce RTX 5090")
+        assert cfg.default_cloud_type == CloudType.SECURE
         assert cfg.default_data_center == DataCenterId("US-TX-3")
         assert cfg.default_image == DEFAULT_IMAGE
         assert cfg.rest_base_url == DEFAULT_REST_URL

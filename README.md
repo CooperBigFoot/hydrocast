@@ -1,12 +1,13 @@
 # model-training
 
-A [uv workspace](https://docs.astral.sh/uv/concepts/workspaces/) combining three packages for hydrological model training:
+A [uv workspace](https://docs.astral.sh/uv/concepts/workspaces/) combining four packages for hydrological model training:
 
 | Package | Role |
 |---------|------|
 | **coach** | Training harness and CLI |
 | **data-leak** | Data loading (Parquet, Zarr, spatial) |
 | **time-flies** | Model architectures (LSTM, Perceiver) |
+| **launchpad** | Remote GPU orchestration for training and evaluation |
 
 ## Setup
 
@@ -20,7 +21,7 @@ uv sync
 
 ```bash
 uv run coach --help          # CLI
-uv run pytest                # run all tests
+uv run python -m pytest      # run all tests
 uv run ruff check .          # lint
 uv run ruff format --check . # format check
 ```
